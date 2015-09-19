@@ -1,21 +1,22 @@
 'use strict';
 
-var util = require('util');
+var util         = require('util');
 var EventEmitter = require('events').EventEmitter;
+var escape       = require('pg-escape');
 
-module.exports = function(client, channelName) {
-  var channel = new Channel(client, channelName);
+module.exports = function(db, channelName) {
+  var channel = new Channel(db, channelName);
   channel.open();
 
   return channel;
 }
 
-var MAX_PAYLOAD_SIZE = 8192;
+var MAX_PAYLOAD_SIZE = 8000;
 
-function Channel(client, name) {
-  this.client = client;
+function Channel(db, name) {
+  this.db = db;
   this.name = name;
-  this.listening = true;
+  this.listening = false;
   EventEmitter.call(this);
 }
 
@@ -27,14 +28,14 @@ proto.open = function() {
   if (this.listening) return;
   this.listening = true;
 
-  this.client.query('LISTEN ' + this.name);
-  this.client.on('notification', this.onNotification.bind(this));
+  this.db.query(escape('LISTEN "%s"', this.name));
+  this.db.on('notification', this.onNotification.bind(this));
 }
 
 proto.close = function() {
   if (this.listening) {
     this.listening = false;
-    this.client.query('UNLISTEN ' + this.name);
+    this.db.query(escape('UNLISTEN "%s"', this.name));
   }
 
   this.removeAllListeners();
@@ -58,5 +59,5 @@ proto.notify = function(type, data) {
     throw new Error('Max payload size is exceeded.');
   }
 
-  this.query('SELECT pg_notify(' + this.name + ', $1)', [payload]);
+  this.db.query(escape('NOTIFY "%s", %L', this.name, payload));
 }
