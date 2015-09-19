@@ -1,0 +1,27 @@
+{
+  "name": "pg-bus",
+  "version": "0.1.0",
+  "description": "Simple multiplexed PubSub on top of PostgreSQL LISTEN/NOTIFY.",
+  "author": "Danil Kolesnikov <kolesnikovde@gmail.com>",
+  "homepage": "https://github.com/kolesnikovde/pg-bus",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kolesnikovde/pg-bus.git"
+  },
+  "keywords": [
+    "postgresql",
+    "pg",
+    "pubsub"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "2.3.0"
+  },
+  "dependencies": {
+    "pg-escape": "^0.1.0"
+  }
+}
