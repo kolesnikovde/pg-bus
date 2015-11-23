@@ -1,6 +1,6 @@
 {
   "name": "pg-bus",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple multiplexed PubSub on top of PostgreSQL LISTEN/NOTIFY.",
   "author": "Danil Kolesnikov <kolesnikovde@gmail.com>",
   "homepage": "https://github.com/kolesnikovde/pg-bus",
