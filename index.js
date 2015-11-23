@@ -44,7 +44,9 @@ proto.close = function() {
 proto.onNotification = function(e) {
   var payload = JSON.parse(e.payload);
 
-  this.emit(payload.type, payload.data);
+  if (e.channel === this.name) {
+    this.emit(payload.type, payload.data);
+  }
 }
 
 // Alias for `on`.

@@ -19,7 +19,8 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "mocha": "2.3.0"
+    "mocha": "2.3.0",
+    "pg": "^4.4.3"
   },
   "dependencies": {
     "pg-escape": "^0.1.0"

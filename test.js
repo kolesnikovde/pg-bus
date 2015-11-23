@@ -25,4 +25,19 @@ describe('pg-bus', function() {
 
     chan.notify('data', { foo: "'; die; --" });
   });
+
+  it('listen only specified channel', function(done) {
+    var chan = bus(db, '0');
+
+    chan.listen('data', function(data) {
+      assert.deepEqual(data, { foo: 'baz' });
+      done();
+    });
+
+    chan.name = '1';
+    chan.notify('data', { foo: 'bar' });
+
+    chan.name = '0';
+    chan.notify('data', { foo: 'baz' });
+  });
 });
