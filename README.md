@@ -14,7 +14,7 @@ var bus = require('pg-bus');
 
 var url = 'postgres://localhost/postgres';
 
-pg.connection(url, function(err, db) {
+pg.connect(url, function(err, db) {
   if (err) throw err;
 
   var messages = bus(db, 'messages');
